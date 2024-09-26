@@ -2,6 +2,16 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff) {
+  for (const curElem of tableOfChangedElements) {
+    if (curElem.coefficient >= 0) {
+      curElem.totalCoefficient = totalStructureOfCoeff.totalMinus;
+    } else {
+      curElem.totalCoefficient = totalStructureOfCoeff.totalPlus;
+    }
+  }
+}
+
 function getTableOfChangedElements(
   tableFormuleOfPartsOne,
   tableFormuleOfPartsTwo
@@ -211,7 +221,9 @@ function onClickCalcButton() {
 
   let totalStructureOfCoeff = getStructTotalCoeff(structureOfCoeff);
 
-  console.log(totalStructureOfCoeff);
+  addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff);
+
+  console.log(tableOfChangedElements);
 }
 
 function getStructurOfParts(curValue) {
