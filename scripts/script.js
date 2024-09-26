@@ -132,6 +132,32 @@ function getStructTotalCoeff(structureOfCoeff) {
 
     totalScruct.totalPlus = originalPlus;
     totalScruct.totalMinus = originalMinus;
+  } else if (structureOfCoeff.plus < structureOfCoeff.minus) {
+    let originalPlus = structureOfCoeff.plus;
+    let originalMinus = structureOfCoeff.minus;
+
+    let curValuePlus = originalPlus;
+
+    for (let k = 2; k <= curValuePlus; k += 1) {
+      let resultPlus = originalPlus / k;
+      let resultMinus = originalMinus / k;
+
+      let remaindPlus = originalPlus % k;
+      let remaindMinus = originalMinus % k;
+      while (remaindPlus === 0 && remaindMinus === 0) {
+        originalPlus = resultPlus;
+        originalMinus = resultMinus;
+
+        resultPlus = originalPlus / k;
+        resultMinus = originalMinus / k;
+
+        remaindPlus = originalPlus % k;
+        remaindMinus = originalMinus % k;
+      }
+    }
+
+    totalScruct.totalPlus = originalPlus;
+    totalScruct.totalMinus = originalMinus;
   }
 
   return totalScruct;
@@ -183,7 +209,9 @@ function onClickCalcButton() {
 
   let structureOfCoeff = getStructureOfCoeff(tableOfChangedElements);
 
-  console.log(structureOfCoeff);
+  let totalStructureOfCoeff = getStructTotalCoeff(structureOfCoeff);
+
+  console.log(totalStructureOfCoeff);
 }
 
 function getStructurOfParts(curValue) {
