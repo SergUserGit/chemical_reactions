@@ -181,6 +181,30 @@ function deleteExtraColumns(tableOfChangedElements) {
   return newArray;
 }
 
+function getTableForCompar(tableFormuleOfPart, tableOfChangedElements) {
+  let tableForCompare = [];
+
+  for (const curRow of tableFormuleOfPart) {
+    let newRow = Object();
+    newRow.formule = curRow.curFormule;
+    newRow.currentTable = curRow.tableOfElements;
+    let coefficient = 1;
+    for (const curRowTable of curRow.tableOfElements) {
+      const foundedElem = tableOfChangedElements.find(
+        (zn) => zn.elemOfOnePart === curRowTable.elemOfTable
+      );
+      if (foundedElem !== undefined) {
+        coefficient = foundedElem.totalCoefficient;
+        break;
+      }
+    }
+    newRow.coefficient = coefficient;
+    tableForCompare.push(newRow);
+  }
+
+  return tableForCompare;
+}
+
 function onClickCalcButton() {
   //Тест
   //Тест
@@ -208,7 +232,18 @@ function onClickCalcButton() {
   addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff);
 
   let tableOfChangedElementsNew = deleteExtraColumns(tableOfChangedElements);
-  console.log(tableOfChangedElementsNew);
+
+  let curTablePartOne = getTableForCompar(
+    tableFormuleOfPartsOne,
+    tableOfChangedElementsNew
+  );
+  let curTablePartTwo = getTableForCompar(
+    tableFormuleOfPartsTwo,
+    tableOfChangedElementsNew
+  );
+
+  console.log(curTablePartOne);
+  console.log(curTablePartTwo);
 }
 
 function getStructurOfParts(curValue) {
