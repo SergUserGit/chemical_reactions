@@ -173,32 +173,16 @@ function getStructTotalCoeff(structureOfCoeff) {
   return totalScruct;
 }
 
+function deleteExtraColumns(tableOfChangedElements) {
+  let newArray = tableOfChangedElements.map((el) => ({
+    totalCoefficient: el.totalCoefficient,
+    elemOfOnePart: el.elemOfOnePart,
+  }));
+  return newArray;
+}
+
 function onClickCalcButton() {
   //Тест
-  /*
-  let testArray = [];
-  const newObj = {
-    a: 1,
-    b: 2,
-    c: 3,
-  };
-  testArray.push(newObj);
-  const newObjNew = {
-    a: 7,
-    b: 8,
-    c: 9,
-  };
-  testArray.push(newObjNew);
-  console.log(testArray);
-  console.log("***********************");
-  for (const el of testArray) {
-    el.d = el.a * 2;
-  }
-  console.log(testArray);
-  
-  const newAr = testArray.map((el) => ({ a: el.a, b: el.b }));
-  console.log(newAr);
-	*/
   //Тест
 
   const strFormule = "NO + H3PO4 --> N2O3 + P2O3 + H2O";
@@ -223,7 +207,8 @@ function onClickCalcButton() {
 
   addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff);
 
-  console.log(tableOfChangedElements);
+  let tableOfChangedElementsNew = deleteExtraColumns(tableOfChangedElements);
+  console.log(tableOfChangedElementsNew);
 }
 
 function getStructurOfParts(curValue) {
