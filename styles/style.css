@@ -1,0 +1,13 @@
+.calc-button {
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+  background: linear-gradient(#B238C0, #DA45EB);
+  color: #541A5A;
+  box-shadow: 10px 5px 5px #73247C;
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
