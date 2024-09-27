@@ -68,6 +68,19 @@ function reduceCoefficients(curTablePartOne, curTablePartTwo) {
           curTablePartTwo,
           curDivider
         );
+        while (divWithoutRemainder) {
+          for (const rowOne of curTablePartOne) {
+            rowOne.coefficient = rowOne.coefficient / curDivider;
+          }
+          for (const rowTwo of curTablePartTwo) {
+            rowTwo.coefficient = rowTwo.coefficient / curDivider;
+          }
+          divWithoutRemainder = itDivisionWithoutRemainder(
+            curTablePartOne,
+            curTablePartTwo,
+            curDivider
+          );
+        }
       }
     }
   }
