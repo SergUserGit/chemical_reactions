@@ -2,6 +2,47 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function getTableOfChanges(
+  tableOfChangedElements,
+  curTablePartOne,
+  curTablePartTwo
+) {
+  let tableOfChanges = [];
+
+  for (const currentRow of tableOfChangedElements) {
+    let newRow = new Object();
+    newRow.elemOfTable = currentRow.elemOfOnePart;
+
+    let sumOne = 0;
+    for (const currentRowOne of curTablePartOne) {
+      const foundedRow = currentRowOne.currentTable.find(
+        (zn) => zn.elemOfTable === currentRow.elemOfOnePart
+      );
+      if (foundedRow !== undefined) {
+        sumOne += 1;
+      }
+    }
+
+    newRow.repeatPartOne = sumOne;
+
+    let sumTwo = 0;
+
+    for (const currentRowTwo of curTablePartTwo) {
+      const foundedRowTwo = currentRowTwo.currentTable.find(
+        (zn) => zn.elemOfTable === currentRow.elemOfOnePart
+      );
+      if (foundedRowTwo !== undefined) {
+        sumTwo += 1;
+      }
+    }
+
+    newRow.repeatPartTwo = sumTwo;
+
+    tableOfChanges.push(newRow);
+  }
+  return tableOfChanges;
+}
+
 function addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff) {
   for (const curElem of tableOfChangedElements) {
     if (curElem.coefficient >= 0) {
@@ -242,8 +283,13 @@ function onClickCalcButton() {
     tableOfChangedElementsNew
   );
 
-  console.log(curTablePartOne);
-  console.log(curTablePartTwo);
+  let tableOfChanges = getTableOfChanges(
+    tableOfChangedElementsNew,
+    curTablePartOne,
+    curTablePartTwo
+  );
+
+  console.log(tableOfChanges);
 }
 
 function getStructurOfParts(curValue) {
