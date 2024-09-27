@@ -2,6 +2,67 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function getCountUnequalElements(
+  countUnequalElements,
+  tableOfChangedElements,
+  tableOfChanges,
+  curTablePartOne,
+  curTablePartTwo
+) {
+  for (const curRow of tableOfChangedElements) {
+    const foundedRowForCheking = tableOfChanges.find(
+      (zn) => zn.elemOfTable === curRow.elemOfOnePart
+    );
+    if (
+      foundedRowForCheking.repeatPartOne === 1 &&
+      foundedRowForCheking.repeatPartTwo === 1
+    ) {
+      let curTableOne = undefined;
+      let curTableTwo = undefined;
+
+      for (const curRowTableOne of curTablePartOne) {
+        const foundedRowOne = curRowTableOne.currentTable.find(
+          (zn) => zn.elemOfTable === curRow.elemOfOnePart
+        );
+        if (foundedRowOne !== undefined) {
+          curTableOne = curRowTableOne;
+          break;
+        }
+      }
+
+      for (const curRowTableTwo of curTablePartTwo) {
+        const foundedRowTwo = curRowTableTwo.currentTable.find(
+          (zn) => zn.elemOfTable === curRow.elemOfOnePart
+        );
+        if (foundedRowTwo !== undefined) {
+          curTableTwo = curRowTableTwo;
+          break;
+        }
+      }
+
+      let curCountOne = curTableOne.currentTable.find(
+        (zn) => zn.elemOfTable === curRow.elemOfOnePart
+      ).count;
+
+      let curCountTwo = curTableTwo.currentTable.find(
+        (zn) => zn.elemOfTable === curRow.elemOfOnePart
+      ).count;
+
+      let valueInLeftSide = curTableOne.coefficient * curCountOne;
+      let valueInRightSide = curTableTwo.coefficient * curCountTwo;
+      if (valueInLeftSide !== valueInRightSide) {
+        if (valueInLeftSide < valueInRightSide) {
+          curTableOne.coefficient = valueInRightSide / curCountOne;
+        } else {
+          curTableTwo.coefficient = valueInLeftSide / curCountTwo;
+        }
+      }
+    } else {
+      countUnequalElements += 1;
+    }
+  }
+}
+
 function getTableOfChanges(
   tableOfChangedElements,
   curTablePartOne,
@@ -289,7 +350,18 @@ function onClickCalcButton() {
     curTablePartTwo
   );
 
-  console.log(tableOfChanges);
+  let countUnequalElements = 0;
+  getCountUnequalElements(
+    countUnequalElements,
+    tableOfChangedElementsNew,
+    tableOfChanges,
+    curTablePartOne,
+    curTablePartTwo
+  );
+
+  console.log(countUnequalElements);
+  console.log(curTablePartOne);
+  console.log(curTablePartTwo);
 }
 
 function getStructurOfParts(curValue) {
