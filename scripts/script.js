@@ -2,6 +2,38 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function getArrayOfDivider(firstElem) {
+  let totalArray = [];
+
+  for (k = 1; k <= firstElem; k += 1) {
+    if (k === 1) {
+      continue;
+    }
+    totalArray.push(k);
+  }
+
+  return totalArray;
+}
+
+function reduceCoefficients(curTablePartOne, curTablePartTwo) {
+  let listOfCoefficients = [];
+  for (const curenRowOne of curTablePartOne) {
+    listOfCoefficients.push(curenRowOne.coefficient);
+  }
+  for (const curentRowTwo of curTablePartTwo) {
+    listOfCoefficients.push(curentRowTwo.coefficient);
+  }
+
+  const foundedNull = listOfCoefficients.indexOf(0);
+  if (foundedNull === -1) {
+    listOfCoefficients.sort((a, b) => a - b);
+    const firstElem = listOfCoefficients[0];
+    if (firstElem > 1) {
+      const arrayOfCoef = getArrayOfDivider(firstElem);
+    }
+  }
+}
+
 function getCountUnequalElements(
   countUnequalElements,
   tableOfChangedElements,
