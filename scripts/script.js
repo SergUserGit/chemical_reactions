@@ -15,6 +15,37 @@ function getArrayOfDivider(firstElem) {
   return totalArray;
 }
 
+function itDivisionWithoutRemainder(
+  curTablePartOne,
+  curTablePartTwo,
+  curDivider
+) {
+  let withoutRemainder = true;
+  let flagOfBreak = false;
+
+  for (const curRowOne of curTablePartOne) {
+    const remaindFromDivision = curRowOne.coefficient % curDivider;
+    if (remaindFromDivision !== 0) {
+      flagOfBreak = true;
+      break;
+    }
+  }
+
+  if (flagOfBreak) {
+    withoutRemainder = false;
+  } else {
+    for (const curRowTwo of curTablePartTwo) {
+      const remaindFromDivision = curRowTwo.coefficient % curDivider;
+      if (remaindFromDivision !== 0) {
+        withoutRemainder = false;
+        break;
+      }
+    }
+  }
+
+  return withoutRemainder;
+}
+
 function reduceCoefficients(curTablePartOne, curTablePartTwo) {
   let listOfCoefficients = [];
   for (const curenRowOne of curTablePartOne) {
@@ -30,6 +61,14 @@ function reduceCoefficients(curTablePartOne, curTablePartTwo) {
     const firstElem = listOfCoefficients[0];
     if (firstElem > 1) {
       const arrayOfCoef = getArrayOfDivider(firstElem);
+
+      for (const curDivider of arrayOfCoef) {
+        let divWithoutRemainder = itDivisionWithoutRemainder(
+          curTablePartOne,
+          curTablePartTwo,
+          curDivider
+        );
+      }
     }
   }
 }
