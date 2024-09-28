@@ -44,6 +44,21 @@ function removeMultiplicity(curTablePartOne, curTablePartTwo) {
   const foundedNull = listOfCoefficients.indexOf(0);
   if (foundedNull === -1) {
     let isMultiplicity = isMultiplicity(curTablePartOne, curTablePartTwo);
+
+    let numberRow = 1;
+    while (isMultiplicity) {
+      for (const rowOne of curTablePartOne) {
+        rowOne.coefficient = rowOne.coefficient * 2;
+      }
+      for (const rowTwo of curTablePartTwo) {
+        rowTwo.coefficient = rowTwo.coefficient * 2;
+      }
+      if (numberRow === 1000) {
+        break;
+      }
+      numberRow += 1;
+      isMultiplicity = isMultiplicity(curTablePartOne, curTablePartTwo);
+    }
   }
 }
 
