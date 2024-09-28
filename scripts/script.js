@@ -33,6 +33,26 @@ function isMultiplicity(curTablePartOne, curTablePartTwo) {
   return curIsMultiplicity;
 }
 
+function getStringOfPart(tableOfPart) {
+  let currentStr = "";
+
+  const countRow = tableOfPart.length;
+
+  for (let k = 0; k < countRow; k += 1) {
+    const curRowOfTable = tableOfPart[k];
+    if (k > 0) {
+      currentStr = currentStr + " + ";
+    }
+    currentStr =
+      currentStr +
+      (curRowOfTable.coefficient === 1
+        ? ""
+        : String(curRowOfTable.coefficient) + curRowOfTable.formule);
+  }
+
+  return currentStr;
+}
+
 function removeMultiplicity(curTablePartOne, curTablePartTwo) {
   let listOfCoefficients = [];
   for (const curRowOne of curTablePartOne) {
