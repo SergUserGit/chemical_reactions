@@ -2,6 +2,51 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function evenNumber(curNumber) {
+  const wholePart = Math.trunc();
+  return curNumber - wholePart === 0 ? true : false;
+}
+
+function isMultiplicity(curTablePartOne, curTablePartTwo) {
+  let curIsMultiplicity = false;
+  let flagOfBreak = false;
+  for (const curRow of curTablePartOne) {
+    const multCoeffOne = evenNumber(curRow.coefficient);
+    if (!multCoeffOne) {
+      flagOfBreak = true;
+      break;
+    }
+  }
+
+  if (flagOfBreak) {
+    curIsMultiplicity = true;
+  } else {
+    for (curRowTwo of curTablePartTwo) {
+      const multCoeffTwo = evenNumber(curRowTwo.coefficient);
+      if (!multCoeffTwo) {
+        curIsMultiplicity = true;
+        break;
+      }
+    }
+  }
+
+  return curIsMultiplicity;
+}
+
+function removeMultiplicity(curTablePartOne, curTablePartTwo) {
+  let listOfCoefficients = [];
+  for (const curRowOne of curTablePartOne) {
+    listOfCoefficients.push(curRowOne.coefficient);
+  }
+  for (const curRowTwo of curTablePartTwo) {
+    listOfCoefficients.push(curRowTwo.coefficient);
+  }
+  const foundedNull = listOfCoefficients.indexOf(0);
+  if (foundedNull === -1) {
+    let isMultiplicity = isMultiplicity(curTablePartOne, curTablePartTwo);
+  }
+}
+
 function getArrayOfDivider(firstElem) {
   let totalArray = [];
 
