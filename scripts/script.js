@@ -7,6 +7,20 @@ function evenNumber(curNumber) {
   return curNumber - wholePart === 0 ? true : false;
 }
 
+function inTableIsHydrogen(curTablePartOne) {
+  let isHydrogen = false;
+
+  for (const curRow of curTablePartOne) {
+    const foundedRow = curRow.currentTable.find((zn) => zn.elemOfTable === "H");
+    if (foundedRow !== undefined) {
+      isHydrogen = true;
+      break;
+    }
+  }
+
+  return isHydrogen;
+}
+
 function isMultiplicity(curTablePartOne, curTablePartTwo) {
   let curIsMultiplicity = false;
   let flagOfBreak = false;
