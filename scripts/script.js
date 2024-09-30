@@ -2,6 +2,56 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function putDownCoeffFromTableChanges(
+  tableOfChanges,
+  curTablePartOne,
+  curTablePartTwo
+) {
+  for (const curRowChanges of tableOfChanges) {
+    if (curRowChanges.repeatPartOne === 1 && curRowChanges.repeatPartTwo) {
+      let curTableOne = undefined;
+      let curTableTwo = undefined;
+      for (const curRowTableOne of curTablePartOne) {
+        const foundedRowOne = curRowTableOne.currentTable.find(
+          (zn) => zn.elemOfTable === curRowChanges.elemOfTable
+        );
+        if (foundedRowOne !== undefined) {
+          curTableOne = curRowTableOne;
+          break;
+        }
+      }
+
+      for (const curRowTableTwo of curTablePartTwo) {
+        const foundedRowTwo = curRowTableTwo.currentTable.find(
+          (zn) => zn.elemOfTable === curRowChanges.elemOfTable
+        );
+        if (foundedRowTwo !== undefined) {
+          curTableTwo = curRowTableTwo;
+          break;
+        }
+      }
+
+      const curCountOne = curTableOne.currentTable.find(
+        (zn) => zn.elemOfTable === curRowChanges.elemOfTable
+      ).count;
+
+      const curCountTwo = curTableTwo.currentTable.find(
+        (zn) => zn.elemOfTable === curRowChanges.elemOfTable
+      ).count;
+
+      const valueInLeftSide = curTableOne.coefficient * curCountOne;
+      const valueInRightSide = curTableTwo.coefficient * curCountTwo;
+      if (valueInLeftSide !== valueInRightSide) {
+        if (valueInLeftSide < valueInRightSide) {
+          curTableOne.coefficient = valueInRightSide / curCountOne;
+        } else {
+          curTableTwo.coefficient = valueInLeftSide / curCountTwo;
+        }
+      }
+    }
+  }
+}
+
 function putDownCoeffOne(curTableOfPart, tableOfChangedElements) {
   for (const curRow of curTableOfPart) {
     const curTable = curRow.currentTable;
