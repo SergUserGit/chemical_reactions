@@ -758,9 +758,15 @@ function onClickCalcButton() {
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   }
 
-  /* console.log(countUnequalElements);
-  console.log(curTablePartOne);
-  console.log(curTablePartTwo);*/
+  reduceCoefficients(curTablePartOne, curTablePartTwo);
+  removeMultiplicity(curTablePartOne, curTablePartTwo);
+
+  const totalFormule =
+    getStringOfPart(curTablePartOne) +
+    " --> " +
+    getStringOfPart(curTablePartTwo);
+
+  console.log(totalFormule);
 }
 
 function getStructurOfParts(curValue) {
