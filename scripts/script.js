@@ -7,6 +7,49 @@ function evenNumber(curNumber) {
   return curNumber - wholePart === 0 ? true : false;
 }
 
+function putDownCoeff(curElem, curTablePartOne, curTablePartTwo) {
+  let curTableOne = undefined;
+  let curTableTwo = undefined;
+
+  for (const curRowOne of curTablePartOne) {
+    const foundedRowOne = curRowOne.currentTable.find(
+      (zn) => zn.elemOfTable === curElem
+    );
+    if (foundedRowOne !== undefined) {
+      curTableOne = curRowOne;
+      break;
+    }
+  }
+
+  for (const curRowTwo of curTablePartTwo) {
+    const foundedRowTwo = curRowTwo.currentTable.find(
+      (zn) => zn.elemOfTable === curElem
+    );
+    if (foundedRowTwo !== undefined) {
+      curTableTwo = curRowTwo;
+      break;
+    }
+  }
+
+  const curCountOne = curTableOne.currentTable.find(
+    (zn) => zn.elemOfTable === curElem
+  ).count;
+
+  const curCountTwo = curTableTwo.currentTable.find(
+    (zn) => zn.elemOfTable === curElem
+  ).count;
+
+  const valueInLeftSide = curTableOne.coefficient * curCountOne;
+  const valueInRightSide = curTableTwo.coefficient * curCountTwo;
+  if (valueInLeftSide !== valueInRightSide) {
+    if (valueInLeftSide < valueInRightSide) {
+      curTableOne.coefficient = valueInRightSide / curCountOne;
+    } else {
+      curTableTwo.coefficient = valueInLeftSide / curCountTwo;
+    }
+  }
+}
+
 function inTableIsHydrogen(curTablePartOne) {
   let isHydrogen = false;
 
