@@ -2,6 +2,13 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function putDownCoeffForHydrogen(curElem, curTablePartOne, curTablePartTwo) {
+  const isHydrogen = inTableIsHydrogen(curTablePartOne);
+  if (isHydrogen) {
+    putDownCoeff(curElem, curTablePartOne, curTablePartTwo);
+  }
+}
+
 function proccesingArrayOfOtherElemOne(
   arrayOfOtherElementsOne,
   curTablePartOne,
@@ -745,7 +752,10 @@ function onClickCalcButton() {
       curTablePartOne,
       curTablePartTwo
     );
+
+    putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   } else {
+    putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   }
 
   /* console.log(countUnequalElements);
