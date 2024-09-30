@@ -2,6 +2,55 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function proccesingArrayOfOtherElemOne(
+  arrayOfOtherElementsOne,
+  curTablePartOne,
+  curTablePartTwo
+) {
+  for (const curElemArray of arrayOfOtherElementsOne) {
+    let curTableOne = undefined;
+    let curTableTwo = undefined;
+
+    for (const curRowOne of curTablePartOne) {
+      const foundedRowOne = curRowOne.currentTable.find(
+        (zn) => zn.elemOfTable === curElemArray
+      );
+      if (foundedRowOne !== undefined) {
+        curTableOne = curRowOne;
+        break;
+      }
+    }
+
+    for (const curRowTwo of curTablePartTwo) {
+      const foundedRowTwo = curRowTwo.currentTable.find(
+        (zn) => zn.elemOfTable === curElemArray
+      );
+      if (foundedRowTwo !== undefined) {
+        curTableTwo = curRowTwo;
+        break;
+      }
+    }
+
+    const curCountOne = curTableOne.currentTable.find(
+      (zn) => zn.elemOfTable === curElemArray
+    ).count;
+
+    const curCountTwo = curTableTwo.currentTable.find(
+      (zn) => zn.elemOfTable === curElemArray
+    ).count;
+
+    const valueInLeftSide = curTableOne.coefficient * curCountOne;
+    const valueInRightSide = curTableTwo.coefficient * curCountTwo;
+    if (valueInLeftSide !== valueInRightSide) {
+      if (valueInLeftSide < valueInRightSide) {
+        curTableOne.coefficient = valueInRightSide / curCountOne;
+      } else {
+        curTableTwo.coefficient = valueInLeftSide / curCountTwo;
+      }
+    }
+  }
+}
+
 function getArrayOtherElementsOne(
   curTablePartOne,
   curTablePartTwo,
@@ -683,6 +732,16 @@ function onClickCalcButton() {
     putDownCoeffOne(curTablePartTwo, tableOfChangedElementsNew);
     putDownCoeffFromTableChanges(
       tableOfChanges,
+      curTablePartOne,
+      curTablePartTwo
+    );
+    const arrayOfOtherElementsOne = getArrayOtherElementsOne(
+      curTablePartOne,
+      curTablePartTwo,
+      tableOfChangedElementsNew
+    );
+    proccesingArrayOfOtherElemOne(
+      arrayOfOtherElementsOne,
       curTablePartOne,
       curTablePartTwo
     );
