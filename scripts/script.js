@@ -2,6 +2,39 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function getArrayOtherElementsOne(
+  curTablePartOne,
+  curTablePartTwo,
+  tableOfChangedElements
+) {
+  let arrayOfOtherElements = [];
+
+  for (const curRowOne of curTablePartOne) {
+    for (const curRowElementOne of curRowOne.currentTable) {
+      for (const curRowTwo of curTablePartTwo) {
+        for (const curRowElementTwo of curRowTwo.currentTable) {
+          const foundElem = arrayOfOtherElements.indexOf(
+            curRowElementTwo.elemOfTable
+          );
+          const foundElemTableChanges = tableOfChangedElements.find(
+            (zn) => zn.elemOfOnePart === curRowElementTwo.elemOfTable
+          );
+          if (
+            curRowElementTwo.elemOfTable === curRowElementOne.elemOfTable &&
+            foundElem === -1 &&
+            curRowElementTwo.elemOfTable !== "H" &&
+            curRowElementTwo.elemOfTable !== "O" &&
+            foundElemTableChanges === undefined
+          ) {
+            arrayOfOtherElements.push(curRowElementTwo.elemOfTable);
+          }
+        }
+      }
+    }
+  }
+  return arrayOfOtherElements;
+}
+
 function putDownCoeffFromTableChanges(
   tableOfChanges,
   curTablePartOne,
