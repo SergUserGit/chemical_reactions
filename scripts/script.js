@@ -315,10 +315,10 @@ function removeMultiplicity(curTablePartOne, curTablePartTwo) {
   }
   const foundedNull = listOfCoefficients.indexOf(0);
   if (foundedNull === -1) {
-    let isMultiplicity = isMultiplicity(curTablePartOne, curTablePartTwo);
+    let isMultiplicityVar = isMultiplicity(curTablePartOne, curTablePartTwo);
 
     let numberRow = 1;
-    while (isMultiplicity) {
+    while (isMultiplicityVar) {
       for (const rowOne of curTablePartOne) {
         rowOne.coefficient = rowOne.coefficient * 2;
       }
@@ -329,7 +329,7 @@ function removeMultiplicity(curTablePartOne, curTablePartTwo) {
         break;
       }
       numberRow += 1;
-      isMultiplicity = isMultiplicity(curTablePartOne, curTablePartTwo);
+      isMultiplicityVar = isMultiplicity(curTablePartOne, curTablePartTwo);
     }
   }
 }
@@ -474,7 +474,7 @@ function getCountUnequalElements(
         }
       }
     } else {
-      countUnequalElements += 1;
+      countUnequalElements = countUnequalElements + 1;
     }
   }
 }
