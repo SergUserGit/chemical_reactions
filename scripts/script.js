@@ -796,6 +796,16 @@ function onClickCalcButton() {
     putDownCoeffInChangeTable(tableOfChanges, curTablePartOne, curTablePartTwo);
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   } else {
+    const arrayOfOtherElementsOne = getArrayOtherElementsOne(
+      curTablePartOne,
+      curTablePartTwo,
+      tableOfChangedElementsNew
+    );
+    proccesingArrayOfOtherElemOne(
+      arrayOfOtherElementsOne,
+      curTablePartOne,
+      curTablePartTwo
+    );
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   }
 
