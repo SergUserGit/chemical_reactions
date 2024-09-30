@@ -2,6 +2,21 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function putDownCoeffOne(curTableOfPart, tableOfChangedElements) {
+  for (const curRow of curTableOfPart) {
+    const curTable = curRow.currentTable;
+    for (const rowOfCurTable of curTable) {
+      const foundedRowOne = tableOfChangedElements.find(
+        (zn) => zn.elemOfOnePart === rowOfCurTable.elemOfTable
+      );
+      if (foundedRowOne === undefined) {
+        curRow.coefficient = 1;
+        break;
+      }
+    }
+  }
+}
+
 function evenNumber(curNumber) {
   const wholePart = Math.trunc();
   return curNumber - wholePart === 0 ? true : false;
@@ -580,9 +595,13 @@ function onClickCalcButton() {
     curTablePartTwo
   );
 
-  console.log(countUnequalElements);
+  if (countUnequalElements > 0) {
+  } else {
+  }
+
+  /* console.log(countUnequalElements);
   console.log(curTablePartOne);
-  console.log(curTablePartTwo);
+  console.log(curTablePartTwo);*/
 }
 
 function getStructurOfParts(curValue) {
