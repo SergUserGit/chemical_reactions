@@ -2,6 +2,47 @@ const calcButton = document.querySelector(".calc-button");
 
 calcButton.addEventListener("click", onClickCalcButton);
 
+function putDownCoeffInChangeTable(
+  tableOfChanges,
+  curTablePartOne,
+  curTablePartTwo
+) {
+  for (const curRowChanges of tableOfChanges) {
+    if (
+      curRowChanges.repeatPartOne === 1 &&
+      curRowChanges.repeatPartTwo !== 1
+    ) {
+      const curElemOfTable = curRowChanges.elemOfTable;
+      let countInRightPart = 0;
+      for (const curRowTableTwo of curTablePartTwo) {
+        const curTableNewPart = curRowTableTwo.currentTable;
+        for (const rowCur of curTableNewPart) {
+          if (rowCur.elemOfTable === curElemOfTable) {
+            countInRightPart =
+              countInRightPart + rowCur.count * curRowTableTwo.coefficient;
+          }
+        }
+      }
+      let curTableOne = undefined;
+      for (const curRowTableOne of curTablePartOne) {
+        const foundedRowOne = curRowTableOne.currentTable.find(
+          (zn) => zn.elemOfTable === curElemOfTable
+        );
+        if (foundedRowOne !== undefined) {
+          curTableOne = curRowTableOne;
+          break;
+        }
+      }
+
+      const curCountOne = curTableOne.currentTable.find(
+        (zn) => zn.elemOfTable === curElemOfTable
+      ).count;
+
+      curTableOne.coefficient = countInRightPart / curCountOne;
+    }
+  }
+}
+
 function putDownCoeffForHydrogen(curElem, curTablePartOne, curTablePartTwo) {
   const isHydrogen = inTableIsHydrogen(curTablePartOne);
   if (isHydrogen) {
@@ -752,7 +793,7 @@ function onClickCalcButton() {
       curTablePartOne,
       curTablePartTwo
     );
-
+    putDownCoeffInChangeTable(tableOfChanges, curTablePartOne, curTablePartTwo);
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   } else {
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
