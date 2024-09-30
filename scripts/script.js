@@ -596,6 +596,8 @@ function onClickCalcButton() {
   );
 
   if (countUnequalElements > 0) {
+    putDownCoeffOne(curTablePartOne, tableOfChangedElementsNew);
+    putDownCoeffOne(curTablePartTwo, tableOfChangedElementsNew);
   } else {
   }
 
