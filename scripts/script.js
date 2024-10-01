@@ -1,5 +1,9 @@
 const calcButton = document.querySelector(".calc-button");
 
+const totl_formule = document.querySelector(".total_formule");
+
+const cur_textarea = document.querySelector(".cur_textarea");
+
 calcButton.addEventListener("click", onClickCalcButton);
 
 function putDownCoeffInChangeTable(
@@ -338,7 +342,7 @@ function removeMultiplicity(curTablePartOne, curTablePartTwo) {
 function getArrayOfDivider(firstElem) {
   let totalArray = [];
 
-  for (k = 1; k <= firstElem; k += 1) {
+  for (let k = 1; k <= firstElem; k += 1) {
     if (k === 1) {
       continue;
     }
@@ -725,10 +729,7 @@ function getTableForCompar(tableFormuleOfPart, tableOfChangedElements) {
 }
 
 function onClickCalcButton() {
-  //Тест
-  //Тест
-
-  const strFormule = "NO + H3PO4 --> N2O3 + P2O3 + H2O";
+  const strFormule = cur_textarea.value.trim().replace("\n", "");
   const strParts = getStructurOfParts(strFormule);
 
   const tableOne = getTableOfDate(strParts.partOne);
@@ -820,7 +821,7 @@ function onClickCalcButton() {
     " --> " +
     getStringOfPart(curTablePartTwo);
 
-  console.log(totalFormule);
+  totl_formule.textContent = totalFormule;
 }
 
 function getStructurOfParts(curValue) {

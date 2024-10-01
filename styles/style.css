@@ -11,3 +11,30 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.cur_textarea {
+  margin-bottom: 50px;
+  margin-top: 15px;
+  border: 5px solid #2F7257;
+  color: #21503D;
+  box-shadow: 10px 5px 5px #3D9471;
+  background: linear-gradient(#59D8A5, #4BB68B);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.group-textarea {
+  display: flex;
+  justify-content: center;
+}
+
+.total_formule {
+  text-align: center;
+  margin-bottom: 50px;
+  color: #30504A;
+  font-weight: 700;
+  font-size: 24px;
+  cursor: pointer;
+  background: linear-gradient(#82D8C7, #6DB6A7);
+  padding: 15px;
+}
