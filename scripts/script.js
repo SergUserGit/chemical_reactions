@@ -198,7 +198,7 @@ function putDownCoeffOne(curTableOfPart, tableOfChangedElements) {
 }
 
 function evenNumber(curNumber) {
-  const wholePart = Math.trunc();
+  const wholePart = Math.trunc(curNumber);
   return curNumber - wholePart === 0 ? true : false;
 }
 
@@ -273,7 +273,7 @@ function isMultiplicity(curTablePartOne, curTablePartTwo) {
   if (flagOfBreak) {
     curIsMultiplicity = true;
   } else {
-    for (curRowTwo of curTablePartTwo) {
+    for (const curRowTwo of curTablePartTwo) {
       const multCoeffTwo = evenNumber(curRowTwo.coefficient);
       if (!multCoeffTwo) {
         curIsMultiplicity = true;
@@ -299,7 +299,8 @@ function getStringOfPart(tableOfPart) {
       currentStr +
       (curRowOfTable.coefficient === 1
         ? ""
-        : String(curRowOfTable.coefficient) + curRowOfTable.formule);
+        : String(curRowOfTable.coefficient)) +
+      curRowOfTable.formule;
   }
 
   return currentStr;
@@ -806,10 +807,12 @@ function onClickCalcButton() {
       curTablePartOne,
       curTablePartTwo
     );
+
     putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
   }
 
   reduceCoefficients(curTablePartOne, curTablePartTwo);
+
   removeMultiplicity(curTablePartOne, curTablePartTwo);
 
   const totalFormule =
