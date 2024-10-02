@@ -43,6 +43,7 @@
   background: linear-gradient(#59D8A5, #4BB68B);
   font-weight: 700;
   font-size: 20px;
+  padding: 5px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 479px) {
