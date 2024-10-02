@@ -80,6 +80,7 @@
   cursor: pointer;
   background: linear-gradient(#82D8C7, #6DB6A7);
   padding: 15px;
+  width: 1160px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 479px) {
