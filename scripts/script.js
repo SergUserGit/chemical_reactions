@@ -729,99 +729,109 @@ function getTableForCompar(tableFormuleOfPart, tableOfChangedElements) {
 }
 
 function onClickCalcButton() {
-  const strFormule = cur_textarea.value.trim().replace("\n", "");
-  const strParts = getStructurOfParts(strFormule);
+  try {
+    const strFormule = cur_textarea.value.trim().replace("\n", "");
+    const strParts = getStructurOfParts(strFormule);
 
-  const tableOne = getTableOfDate(strParts.partOne);
-  const tableTwo = getTableOfDate(strParts.partTwo);
+    const tableOne = getTableOfDate(strParts.partOne);
+    const tableTwo = getTableOfDate(strParts.partTwo);
 
-  const tableFormuleOfPartsOne = getTableOfParts(tableOne);
-  const tableFormuleOfPartsTwo = getTableOfParts(tableTwo);
+    const tableFormuleOfPartsOne = getTableOfParts(tableOne);
+    const tableFormuleOfPartsTwo = getTableOfParts(tableTwo);
 
-  let tableOfChangedElements = getTableOfChangedElements(
-    tableFormuleOfPartsOne,
-    tableFormuleOfPartsTwo
-  );
+    let tableOfChangedElements = getTableOfChangedElements(
+      tableFormuleOfPartsOne,
+      tableFormuleOfPartsTwo
+    );
 
-  setCoefficientsForTableChanges(tableOfChangedElements);
+    setCoefficientsForTableChanges(tableOfChangedElements);
 
-  let structureOfCoeff = getStructureOfCoeff(tableOfChangedElements);
+    let structureOfCoeff = getStructureOfCoeff(tableOfChangedElements);
 
-  let totalStructureOfCoeff = getStructTotalCoeff(structureOfCoeff);
+    let totalStructureOfCoeff = getStructTotalCoeff(structureOfCoeff);
 
-  addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff);
+    addTotalCoeff(tableOfChangedElements, totalStructureOfCoeff);
 
-  let tableOfChangedElementsNew = deleteExtraColumns(tableOfChangedElements);
+    let tableOfChangedElementsNew = deleteExtraColumns(tableOfChangedElements);
 
-  let curTablePartOne = getTableForCompar(
-    tableFormuleOfPartsOne,
-    tableOfChangedElementsNew
-  );
-  let curTablePartTwo = getTableForCompar(
-    tableFormuleOfPartsTwo,
-    tableOfChangedElementsNew
-  );
+    let curTablePartOne = getTableForCompar(
+      tableFormuleOfPartsOne,
+      tableOfChangedElementsNew
+    );
+    let curTablePartTwo = getTableForCompar(
+      tableFormuleOfPartsTwo,
+      tableOfChangedElementsNew
+    );
 
-  let tableOfChanges = getTableOfChanges(
-    tableOfChangedElementsNew,
-    curTablePartOne,
-    curTablePartTwo
-  );
+    let tableOfChanges = getTableOfChanges(
+      tableOfChangedElementsNew,
+      curTablePartOne,
+      curTablePartTwo
+    );
 
-  let countUnequalElements = 0;
-  getCountUnequalElements(
-    countUnequalElements,
-    tableOfChangedElementsNew,
-    tableOfChanges,
-    curTablePartOne,
-    curTablePartTwo
-  );
-
-  if (countUnequalElements > 0) {
-    putDownCoeffOne(curTablePartOne, tableOfChangedElementsNew);
-    putDownCoeffOne(curTablePartTwo, tableOfChangedElementsNew);
-    putDownCoeffFromTableChanges(
+    let countUnequalElements = 0;
+    getCountUnequalElements(
+      countUnequalElements,
+      tableOfChangedElementsNew,
       tableOfChanges,
       curTablePartOne,
       curTablePartTwo
     );
-    const arrayOfOtherElementsOne = getArrayOtherElementsOne(
-      curTablePartOne,
-      curTablePartTwo,
-      tableOfChangedElementsNew
-    );
-    proccesingArrayOfOtherElemOne(
-      arrayOfOtherElementsOne,
-      curTablePartOne,
-      curTablePartTwo
-    );
-    putDownCoeffInChangeTable(tableOfChanges, curTablePartOne, curTablePartTwo);
-    putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
-  } else {
-    const arrayOfOtherElementsOne = getArrayOtherElementsOne(
-      curTablePartOne,
-      curTablePartTwo,
-      tableOfChangedElementsNew
-    );
-    proccesingArrayOfOtherElemOne(
-      arrayOfOtherElementsOne,
-      curTablePartOne,
-      curTablePartTwo
-    );
 
-    putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
+    if (countUnequalElements > 0) {
+      putDownCoeffOne(curTablePartOne, tableOfChangedElementsNew);
+      putDownCoeffOne(curTablePartTwo, tableOfChangedElementsNew);
+      putDownCoeffFromTableChanges(
+        tableOfChanges,
+        curTablePartOne,
+        curTablePartTwo
+      );
+      const arrayOfOtherElementsOne = getArrayOtherElementsOne(
+        curTablePartOne,
+        curTablePartTwo,
+        tableOfChangedElementsNew
+      );
+      proccesingArrayOfOtherElemOne(
+        arrayOfOtherElementsOne,
+        curTablePartOne,
+        curTablePartTwo
+      );
+      putDownCoeffInChangeTable(
+        tableOfChanges,
+        curTablePartOne,
+        curTablePartTwo
+      );
+      putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
+    } else {
+      const arrayOfOtherElementsOne = getArrayOtherElementsOne(
+        curTablePartOne,
+        curTablePartTwo,
+        tableOfChangedElementsNew
+      );
+      proccesingArrayOfOtherElemOne(
+        arrayOfOtherElementsOne,
+        curTablePartOne,
+        curTablePartTwo
+      );
+
+      putDownCoeffForHydrogen("H", curTablePartOne, curTablePartTwo);
+    }
+
+    reduceCoefficients(curTablePartOne, curTablePartTwo);
+
+    removeMultiplicity(curTablePartOne, curTablePartTwo);
+
+    const totalFormule =
+      getStringOfPart(curTablePartOne) +
+      " --> " +
+      getStringOfPart(curTablePartTwo);
+
+    totl_formule.textContent = totalFormule;
+  } catch (error) {
+    alert(
+      "Можливо некоректно введена реакція, приклад коректної реакції - NO + H3PO4 --> NO2 + P2O3 + H2O"
+    );
   }
-
-  reduceCoefficients(curTablePartOne, curTablePartTwo);
-
-  removeMultiplicity(curTablePartOne, curTablePartTwo);
-
-  const totalFormule =
-    getStringOfPart(curTablePartOne) +
-    " --> " +
-    getStringOfPart(curTablePartTwo);
-
-  totl_formule.textContent = totalFormule;
 }
 
 function getStructurOfParts(curValue) {
